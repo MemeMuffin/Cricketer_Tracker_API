@@ -29,6 +29,13 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan)
 
+
+@app.get("/")
+async def welcome():
+    """Simple function to check for working app"""
+    return {"message": "Hello, Welcome to my cricketer tracker API.Add /docs to url to check requests."}
+
+
 app.include_router(cricketers)
 app.include_router(teams)
 app.include_router(match_performances)
