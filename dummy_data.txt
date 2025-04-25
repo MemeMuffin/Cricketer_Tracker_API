@@ -1,0 +1,18 @@
+Cricketers:
+{'id': 1, 'country': 'Montserrat', 'team_id': 3, 'name': 'Sue Thompson', 'age': 28, 'role': 'All Rounder'}
+{'id': 2, 'country': 'Burundi', 'team_id': 3, 'name': 'Geoffrey Marquez', 'age': 20, 'role': 'Bowler'}
+{'id': 3, 'country': 'Greenland', 'team_id': 1, 'name': 'Jesus Stark', 'age': 20, 'role': 'All Rounder'}
+{'id': 4, 'country': 'Romania', 'team_id': 3, 'name': 'Jonathan Cook', 'age': 29, 'role': 'All Rounder'}
+{'id': 5, 'country': 'Spain', 'team_id': 1, 'name': 'Patricia Fitzgerald', 'age': 24, 'role': 'Bowler'}
+Teams:
+{'country': 'Iran', 'name': 'Rivers, Tate and Hubbard', 'id': 1}
+{'country': 'Egypt', 'name': 'Knapp LLC', 'id': 2}
+{'country': 'Malawi', 'name': 'Mclean, Estrada and Barajas', 'id': 3}
+{'country': 'Brazil', 'name': 'Bautista-Kelly', 'id': 4}
+{'country': 'Mexico', 'name': 'Conner, Contreras and Newton', 'id': 5}
+Match Performances:
+{'id': 1, 'runs': 119, 'opponent_team': 'Jordan Ltd', 'match_date': datetime.date(1998, 4, 25), 'cricketer_id': 5, 'wickets': 1, 'match_type': 'Test'}
+{'id': 2, 'runs': 142, 'opponent_team': 'Davis, Jordan and Phelps', 'match_date': datetime.date(1998, 4, 25), 'cricketer_id': 5, 'wickets': 1, 'match_type': 'T20'}
+{'id': 3, 'runs': 61, 'opponent_team': 'Barnes and Sons', 'match_date': datetime.date(1998, 4, 25), 'cricketer_id': 5, 'wickets': 4, 'match_type': 'One day'}
+{'id': 4, 'runs': 144, 'opponent_team': 'Le LLC', 'match_date': datetime.date(1998, 4, 25), 'cricketer_id': 5, 'wickets': 2, 'match_type': 'One day'}
+{'id': 5, 'runs': 61, 'opponent_team': 'Garrett-Mendoza', 'match_date': datetime.date(1998, 4, 25), 'cricketer_id': 5, 'wickets': 7, 'match_type': 'T20'}
