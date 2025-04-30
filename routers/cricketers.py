@@ -18,8 +18,6 @@ async def create_cricketer(
     current_user: Annotated[dict, Security(get_current_user)],
 ):
     """Creates new cricketers"""
-    if current_user["role"] != "admin" and "superuser":
-        raise HTTPException(status_code=403, detail="Not enough privileges")
     return crud.create_cricketer(session, new_cricketer)
 
 
@@ -45,7 +43,7 @@ async def delete_cricketer(
     current_user: Annotated[dict, Security(get_current_user)],
 ):
     """Deletes a cricketer"""
-    if current_user["role"] != "admin" and "superuser":
+    if current_user["role"] in ("admin", "superuser"):
         raise HTTPException(status_code=403, detail="Not enough privileges")
     cricketer_by_id = crud.get_cricketer_by_id(session, cricketer_id)
     if not cricketer_by_id:

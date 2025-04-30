@@ -54,7 +54,11 @@ app = FastAPI(lifespan=lifespan)
 @app.get("/")
 async def welcome():
     """Simple function to check for working app"""
-    return {"message": "Hello, Welcome to my cricketer tracker API.Add /docs to url to check requests."}
+    return {
+        "message": "Hello, Welcome to my cricketer tracker API.Add /docs to url to check requests.",
+        "Dummy Superuser": "rebecca45: iH8DPgcpQ#",
+        "Dummy administrator": "williamskaren: n5wUZr5F+t",
+    }
 
 
 app.include_router(authentication)
