@@ -2,11 +2,26 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from sqlmodel import select
 from db.session import get_session, create_db_and_tables
+from routers.auth import router as authentication
+from routers.superuser import router as superusers
+from routers.admin import router as administrators
 from routers.cricketers import router as cricketers
 from routers.team import router as teams
 from routers.match_performance import router as match_performances
-from models import cricketer as model_cricketer, team as model_team, match_performance as model_match_performance
-from utils.dummy_data import creat_dummy_cricketers, creat_dummy_match_performance, creat_dummy_teams
+from models import (
+    cricketer as model_cricketer,
+    team as model_team,
+    match_performance as model_match_performance,
+    superuser,
+    admin,
+)
+from utils.dummy_data import (
+    creat_dummy_cricketers,
+    creat_dummy_match_performance,
+    creat_dummy_teams,
+    create_dummy_admin,
+    create_dummy_superuser,
+)
 
 
 @asynccontextmanager
@@ -23,6 +38,12 @@ async def lifespan(app: FastAPI):
         existing_match_performances = session.exec(select(model_match_performance.MatchPerformance)).all()
         if not existing_match_performances:
             creat_dummy_match_performance(session)
+        existing_superusers = session.exec(select(superuser.Superuser)).all()
+        if not existing_superusers:
+            create_dummy_superuser(session)
+        existing_admin = session.exec(select(admin.Administrator)).all()
+        if not existing_admin:
+            create_dummy_admin(session)
 
     yield
 
@@ -36,6 +57,9 @@ async def welcome():
     return {"message": "Hello, Welcome to my cricketer tracker API.Add /docs to url to check requests."}
 
 
+app.include_router(authentication)
+app.include_router(superusers)
+app.include_router(administrators)
 app.include_router(cricketers)
 app.include_router(teams)
 app.include_router(match_performances)
