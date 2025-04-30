@@ -14,9 +14,7 @@ router = APIRouter(prefix="/match_performance", tags=["Match Performance"])
 
 @router.post("/create", response_model=schema.MatchPerformanceRead)
 async def create_match_performance(
-    new_match_performace: schema.MatchPerformanceCreate,
-    session: Annotated[Session, Depends(get_session)],
-    current_user: Annotated[dict, Security(get_current_user)],
+    new_match_performace: schema.MatchPerformanceCreate, session: Annotated[Session, Depends(get_session)]
 ):
     """Creates new match performance data"""
     return crud.create_match_perfomance(session, new_match_performace)
