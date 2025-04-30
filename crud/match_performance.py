@@ -1,12 +1,18 @@
 """CRUD operations for Match Performance Table"""
 
 from sqlmodel import Session, select
+from fastapi import HTTPException
 from models.match_performance import MatchPerformance
 
 
 def create_match_perfomance(session: Session, match_performance: MatchPerformance) -> MatchPerformance:
     """Creates new cricketer"""
     db_match_performance = MatchPerformance(**match_performance.model_dump())
+    is_existing = session.exec(
+        select(MatchPerformance).where(MatchPerformance.match_date == db_match_performance.match_date)
+    ).first()
+    if is_existing:
+        raise HTTPException(status_code=403, detail="Match performance already exists.")
     session.add(db_match_performance)
     session.commit()
     session.refresh(db_match_performance)

@@ -8,10 +8,13 @@ from models.team import Team
 
 def create_cricketer(session: Session, cricketer: Cricketer) -> Cricketer:
     """Creates new cricketer"""
+    db_cricketer = Cricketer(**cricketer.model_dump())
+    is_existing = session.exec(select(Cricketer).where(Cricketer.name == db_cricketer.name)).first()
+    if is_existing:
+        raise HTTPException(status_code=403, detail="Match performance already exists.")
     cricketer_team_id = session.exec(select(Team).where(Team.id == cricketer.team_id)).first()
     if not cricketer_team_id:
         raise HTTPException(status_code=404, detail="Team does not exist.")
-    db_cricketer = Cricketer(**cricketer.model_dump())
     session.add(db_cricketer)
     session.commit()
     session.refresh(db_cricketer)
