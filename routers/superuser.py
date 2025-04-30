@@ -19,7 +19,7 @@ async def register_superuser(
     current_user: Annotated[dict, Security(get_current_user)],
 ):
     """Registers new superuser"""
-    if current_user["role"] != "superuser":
+    if current_user.get("role") != "superuser":
         raise HTTPException(status_code=403, detail="Not enough privileges")
     return crud.create_superuser(session, new_superuser)
 
@@ -30,7 +30,7 @@ async def get_all_superuser(
     current_user: Annotated[dict, Security(get_current_user)],
 ):
     """Shows all superusers"""
-    if current_user["role"] != "superuser":
+    if current_user.get("role") != "superuser":
         raise HTTPException(status_code=403, detail="Not enough privileges")
     return crud.read_all(session)
 
@@ -42,7 +42,7 @@ async def get_by_id_superuser(
     current_user: Annotated[dict, Security(get_current_user)],
 ):
     """Shows user by id"""
-    if current_user["role"] != "superuser":
+    if current_user.get("role") != "superuser":
         raise HTTPException(status_code=403, detail="Not enough privileges")
     return crud.read_by_id(session, id)
 
@@ -55,7 +55,7 @@ async def update_superuser(
     current_user: Annotated[dict, Security(get_current_user)],
 ):
     """Updates superuser by id"""
-    if current_user["role"] != "superuser":
+    if current_user.get("role") != "superuser":
         raise HTTPException(status_code=403, detail="Not enough privileges")
     return crud.update_superuser(session, update_superuser, id)
 
@@ -67,6 +67,6 @@ async def delete_superuser(
     current_user: Annotated[dict, Security(get_current_user)],
 ):
     """Deletes superusers"""
-    if current_user["role"] != "superuser":
+    if current_user.get("role") != "superuser":
         raise HTTPException(status_code=403, detail="Not enough privileges")
     return crud.delete_superuser(session, id)

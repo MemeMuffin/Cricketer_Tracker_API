@@ -18,7 +18,7 @@ async def register_administrator(
     current_user: Annotated[dict, Security(get_current_user)],
 ):
     """Registers new administrator"""
-    if current_user["role"] in ("admin", "superuser"):
+    if current_user.get("role") in ("admin", "superuser"):
         raise HTTPException(status_code=403, detail="Not enough privileges")
     return crud.create_administrator(session, new_administrator)
 
@@ -29,7 +29,7 @@ async def get_all(
     current_user: Annotated[dict, Security(get_current_user)],
 ):
     """Shows all administrator"""
-    if current_user["role"] in ("admin", "superuser"):
+    if current_user.get("role") in ("admin", "superuser"):
         raise HTTPException(status_code=403, detail="Not enough privileges")
     return crud.read_all(session)
 
@@ -41,7 +41,7 @@ async def get_by_id(
     current_user: Annotated[dict, Security(get_current_user)],
 ):
     """Shows administrator by given id"""
-    if current_user["role"] in ("admin", "superuser"):
+    if current_user.get("role") in ("admin", "superuser"):
         raise HTTPException(status_code=403, detail="Not enough privileges")
     return crud.read_by_id(session, id)
 
@@ -54,7 +54,7 @@ async def update_administrator(
     current_user: Annotated[dict, Security(get_current_user)],
 ):
     """Updates an administrator"""
-    if current_user["role"] in ("admin", "superuser"):
+    if current_user.get("role") in ("admin", "superuser"):
         raise HTTPException(status_code=403, detail="Not enough privileges")
     return crud.update_administrator(session, id, update_admin)
 
@@ -66,6 +66,6 @@ async def delete_administrator(
     current_user: Annotated[dict, Security(get_current_user)],
 ):
     """Updates an administrator"""
-    if current_user["role"] != "superuser":
+    if current_user.get("role") != "superuser":
         raise HTTPException(status_code=403, detail="Not enough privileges")
     return crud.delete_by_id(session, id)

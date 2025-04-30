@@ -18,7 +18,7 @@ async def register_new_team(
     current_user: Annotated[dict, Security(get_current_user)],
 ):
     """Creates new team"""
-    if current_user["role"] in ("admin", "superuser"):
+    if current_user.get("role") in ("admin", "superuser"):
         raise HTTPException(status_code=403, detail="Not enough privileges")
     return crud.create_team(session, new_team)
 
@@ -45,7 +45,7 @@ async def delete_team(
     current_user: Annotated[dict, Security(get_current_user)],
 ):
     """Deletes team by id"""
-    if current_user["role"] in ("admin", "superuser"):
+    if current_user.get("role") in ("admin", "superuser"):
         raise HTTPException(status_code=403, detail="Not enough privileges")
     delete_team_by_id = crud.get_team_by_id(session, id)
     if not delete_team_by_id:
