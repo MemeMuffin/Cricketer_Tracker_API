@@ -119,9 +119,9 @@ uvicorn CRICKETER_TRACKER_API.main:app --reload
 
 You can explore all endpoints via the auto-generated docs:
 
-- Swagger UI: http://localhost:8000/docs or https://cricketertracker-7fb0b50e4aa58208c160789cdd35ebaaaec98244 -muhammad-mutayyab-hafeezs-projects.vercel.app/docs (Deployed using vercel)
+- Swagger UI: http://localhost:8000/docs or https://cricketertracker-jt74vllod-muhammad-mutayyab-hafeezs-projects.vercel.app/docs (Deployed using vercel)
 
-- ReDoc: http://localhost:8000/redoc or https://cricketertracker-7fb0b50e4aa58208c160789cdd35ebaaaec98244 -muhammad-mutayyab-hafeezs-projects.vercel.app/redoc (Deployed using vercel)
+- ReDoc: http://localhost:8000/redoc or https://cricketertracker-jt74vllod-muhammad-mutayyab-hafeezs-projects.vercel.app/redoc (Deployed using vercel)
 
 ---
 
