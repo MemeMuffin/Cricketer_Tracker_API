@@ -97,3 +97,7 @@ __docker_cache__/
 .DS_Store
 Thumbs.db
 .vercel
+
+# Dummy Data text files
+dummy_data.txt
+dummy_admins_superusers.txt
