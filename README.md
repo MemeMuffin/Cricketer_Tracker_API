@@ -6,6 +6,8 @@ A full-featured **FastAPI** application to manage cricketers, teams, and match p
 
 ## 🚀 Features
 
+- 👤 Manage **Superuser**: Create, view, and assign superusers to manage the deletion and creation of every managed data
+- 👤 Manage **Adminstrator**: Create, view, and assign administrators to manage the deletion and creation
 - 👤 Manage **Cricketers**: Create, view, and assign players to teams
 - 🧢 Manage **Teams**: Track cricket teams and their countries
 - 📈 Log **Match Performances**: Track runs, wickets, match types, and opponents
@@ -23,18 +25,26 @@ cricketer_tracker_api/
 ├── db/ │  
 │       └── session.py # Database connection & session setup  
 ├── models/ │  
+│           ├──superuser.py #Superuser SQLModel
+│           ├──admin.py #Administrator SQLModel
 │           ├── cricketer.py # Cricketer SQLModel  
 │           ├── team.py # Team SQLModel  
 │           └── performance.py # Match performance SQLModel  
 ├── schemas/ │  
+│            ├──superuser.py # Pydantic schemas for superuser 
+│            ├──admin.py # Pydantic schemas for Admin
 │            ├── cricketer.py # Pydantic schemas for Cricketer  
 │            ├── team.py # Pydantic schemas for Team  
 │            └── performance.py # Pydantic schemas for MatchPerformance  
 ├── crud/ │  
+│         ├──superuser.py # DB logic for superuser
+│         ├──admin.py # DB logic for admin
 │         ├── cricketer.py # DB logic for cricketers  
 │         ├── team.py # DB logic for teams  
 │         └── performance.py # DB logic for performances  
 ├── routers/ │  
+│            ├──superuser.py # Superuser endpoints
+│            ├──admin.py # Admin endpoints
 │            ├── cricketer.py # Cricketer endpoints  
 │            ├── team.py # Team endpoints  
 │            └── performance.py # MatchPerformance endpoints  
@@ -51,7 +61,7 @@ cricketer_tracker_api/
 - Dummy teams, cricketers, and match performances are created at startup
 - Ensures consistent test data is available
 - You can customize the number of records in each generator function
-- Logs usernames and passwords (if applicable) to `dummy_data.txt`
+- Logs usernames and passwords (if applicable) to `dummy_admin_superuser.txt`
 
 ---
 
@@ -94,14 +104,18 @@ uvicorn CRICKETER_TRACKER_API.main:app --reload
 
 ## 🧠 API Endpoints
 
-| Method | Endpoint                 | Description                |
-| ------ | ------------------------ | -------------------------- |
-| GET    | `/cricketers/get_all`    | Get all cricketers         |
-| POST   | `/cricketers/register`   | Create a cricketer         |
-| GET    | `/teams/get_all`         | Get all teams              |
-| POST   | `/teams/register`        | Create a team              |
-| GET    | `/performances/get_all`  | Get all match performances |
-| POST   | `/performances/register` | Log new match performance  |
+| Method | Endpoint                  | Description                |
+| ------ | ------------------------- | -------------------------- |
+| GET    | `/superuser/get_all`      | Get all superusers         |
+| POST   | `/superuser/register`     | Create a superuser         |
+| GET    | `/administrator/get_all`  | Get all administrators     |
+| POST   | `/administrator/register` | Create a administrator     |
+| GET    | `/cricketers/get_all`     | Get all cricketers         |
+| POST   | `/cricketers/register`    | Create a cricketer         |
+| GET    | `/teams/get_all`          | Get all teams              |
+| POST   | `/teams/register`         | Create a team              |
+| GET    | `/performances/get_all`   | Get all match performances |
+| POST   | `/performances/register`  | Log new match performance  |
 
 You can explore all endpoints via the auto-generated docs:
 
