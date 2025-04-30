@@ -7,7 +7,14 @@ from fastapi import Depends
 from sqlmodel import Session, select, func
 from faker import Faker
 from db.session import get_session
-from models import cricketer as model_cricketer, team as model_team, match_performance as model_match_performance
+from models import (
+    cricketer as model_cricketer,
+    team as model_team,
+    match_performance as model_match_performance,
+    superuser,
+    admin,
+)
+from utils.authentication import hash_password
 
 
 def creat_dummy_cricketers(session: Annotated[Session, Depends(get_session)], records=5):
@@ -104,3 +111,47 @@ def creat_dummy_match_performance(session: Annotated[Session, Depends(get_sessio
             file.write(f"{key.model_dump()}" "\n")
 
     return match_performances
+
+
+def create_dummy_superuser(session: Annotated[Session, Depends(get_session)]):
+    """Creates a dummy superuser"""
+    existing_superuser = session.exec(select(func.count()).select_from(superuser.Superuser)).one()
+
+    if existing_superuser > 0:
+        return None
+
+    fake = Faker()
+
+    dummy_plain_pass = fake.password()
+    dummy_hash_pass = hash_password(dummy_plain_pass)
+    dummy_superuser = superuser.Superuser(name=fake.name(), username=fake.user_name(), password=dummy_hash_pass)
+    session.add(dummy_superuser)
+    session.commit()
+    session.refresh(dummy_superuser)
+
+    with open("dummy_admins_superusers.txt", "w") as file:
+        file.write(f"Dummy Superuser: \n{dummy_superuser.username}: {dummy_plain_pass}\n")
+
+    return dummy_superuser
+
+
+def create_dummy_admin(session: Annotated[Session, Depends(get_session)]):
+    """Creates a dummy superuser"""
+    existing_admin = session.exec(select(func.count()).select_from(admin.Administrator)).one()
+
+    if existing_admin > 0:
+        return None
+
+    fake = Faker()
+
+    dummy_plain_pass = fake.password()
+    dummy_hash_pass = hash_password(dummy_plain_pass)
+    dummy_admin = admin.Administrator(name=fake.name(), username=fake.user_name(), password=dummy_hash_pass)
+    session.add(dummy_admin)
+    session.commit()
+    session.refresh(dummy_admin)
+
+    with open("dummy_admins_superusers.txt", "a") as file:
+        file.write(f"Dummy administrator: \n{dummy_admin.username}: {dummy_plain_pass}\n")
+
+    return dummy_admin
