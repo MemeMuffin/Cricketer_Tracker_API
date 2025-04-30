@@ -44,7 +44,7 @@ async def delete_match_perfomance_by_id(
     current_user: Annotated[dict, Security(get_current_user)],
 ):
     """Deletes match performance by id"""
-    if current_user.get("role") in ("admin", "superuser"):
+    if current_user.get("role") not in ("admin", "superuser"):
         raise HTTPException(status_code=403, detail="Not enough privileges")
     delete_match_performanc_by_id = crud.delete_match_perfomance(session, id)
     if not delete_match_performanc_by_id:
