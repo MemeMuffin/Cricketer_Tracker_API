@@ -8,6 +8,7 @@ from sqlmodel import SQLModel, Field, Relationship
 if TYPE_CHECKING:
     from models.team import Team
     from models.match_performance import MatchPerformance
+    from models.ranking import Ranking
 
 
 class Cricketer(SQLModel, table=True):
@@ -22,3 +23,4 @@ class Cricketer(SQLModel, table=True):
 
     team: Optional["Team"] = Relationship(back_populates="cricketers")
     performances: list["MatchPerformance"] = Relationship(back_populates="cricketers")
+    ranking: Optional["Ranking"] = Relationship(back_populates="cricketer")

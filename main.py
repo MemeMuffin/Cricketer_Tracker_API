@@ -1,6 +1,6 @@
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
-from sqlmodel import select
+from sqlmodel import select, func
 from db.session import get_session, create_db_and_tables
 from routers.auth import router as authentication
 from routers.superuser import router as superusers
@@ -8,13 +8,16 @@ from routers.admin import router as administrators
 from routers.cricketers import router as cricketers
 from routers.team import router as teams
 from routers.match_performance import router as match_performances
+from routers.ranking import router as rankings
 from models import (
     cricketer as model_cricketer,
     team as model_team,
     match_performance as model_match_performance,
     superuser,
     admin,
+    ranking,
 )
+from crud.ranking import create_ranking
 from utils.dummy_data import (
     creat_dummy_cricketers,
     creat_dummy_match_performance,
@@ -44,6 +47,9 @@ async def lifespan(app: FastAPI):
         existing_admin = session.exec(select(admin.Administrator)).all()
         if not existing_admin:
             create_dummy_admin(session)
+        is_existing_rankings = session.exec(select(func.count()).select_from(ranking.Ranking)).one()
+        if not is_existing_rankings > 0:
+            create_ranking(session)
 
     yield
 
@@ -67,3 +73,4 @@ app.include_router(administrators)
 app.include_router(cricketers)
 app.include_router(teams)
 app.include_router(match_performances)
+app.include_router(rankings)
