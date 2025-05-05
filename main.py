@@ -47,9 +47,7 @@ async def lifespan(app: FastAPI):
         existing_admin = session.exec(select(admin.Administrator)).all()
         if not existing_admin:
             create_dummy_admin(session)
-        is_existing_rankings = session.exec(select(func.count()).select_from(ranking.Ranking)).one()
-        if not is_existing_rankings > 0:
-            create_ranking(session)
+        create_ranking(session)
 
     yield
 
