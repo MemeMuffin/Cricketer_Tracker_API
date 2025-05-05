@@ -10,6 +10,7 @@ A full-featured **FastAPI** application to manage cricketers, teams, and match p
 - 👤 Manage **Adminstrator**: Create, view, and assign administrators to manage the deletion and creation
 - 👤 Manage **Cricketers**: Create, view, and assign players to teams
 - 🧢 Manage **Teams**: Track cricket teams and their countries
+- 👤 Read **Rankings**: Track all the ranks of the players
 - 📈 Log **Match Performances**: Track runs, wickets, match types, and opponents
 - 🔒 Clean project structure using FastAPI and SQLModel
 - 🧪 Generates **dummy data** at startup for easy testing
@@ -29,24 +30,28 @@ cricketer_tracker_api/
 │           ├──admin.py #Administrator SQLModel
 │           ├── cricketer.py # Cricketer SQLModel  
 │           ├── team.py # Team SQLModel  
+│           ├── ranking.py # Ranking SQLModel  
 │           └── performance.py # Match performance SQLModel  
 ├── schemas/ │  
 │            ├──superuser.py # Pydantic schemas for superuser 
 │            ├──admin.py # Pydantic schemas for Admin
 │            ├── cricketer.py # Pydantic schemas for Cricketer  
 │            ├── team.py # Pydantic schemas for Team  
+│            ├── ranking.py # Pydantic schemas for Ranking  
 │            └── performance.py # Pydantic schemas for MatchPerformance  
 ├── crud/ │  
 │         ├──superuser.py # DB logic for superuser
 │         ├──admin.py # DB logic for admin
 │         ├── cricketer.py # DB logic for cricketers  
 │         ├── team.py # DB logic for teams  
+│         ├── ranking.py # DB logic for ranking  
 │         └── performance.py # DB logic for performances  
 ├── routers/ │  
 │            ├──superuser.py # Superuser endpoints
 │            ├──admin.py # Admin endpoints
 │            ├── cricketer.py # Cricketer endpoints  
 │            ├── team.py # Team endpoints  
+│            ├── ranking.py # Ranking endpoints  
 │            └── performance.py # MatchPerformance endpoints  
 ├── main.py # FastAPI entry point  
 ├── dummy_data.txt # Generated dummy login data  
@@ -116,6 +121,7 @@ uvicorn CRICKETER_TRACKER_API.main:app --reload
 | POST   | `/teams/register`         | Create a team              |
 | GET    | `/performances/get_all`   | Get all match performances |
 | POST   | `/performances/register`  | Log new match performance  |
+| GET    | `/ranking/get_all`        | Get all rankings           |
 
 You can explore all endpoints via the auto-generated docs:
 
