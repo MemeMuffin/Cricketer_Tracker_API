@@ -11,16 +11,16 @@ from crud.ranking import update_rankings, create_ranking, delete_ranking
 def create_match_perfomance(session: Session, match_performance: MatchPerformance) -> MatchPerformance:
     """Creates new cricketer"""
     db_match_performance = MatchPerformance(**match_performance.model_dump())
-    is_existing = session.exec(
-        select(MatchPerformance).where(MatchPerformance.match_date == db_match_performance.match_date)
-    ).first()
+    # is_existing = session.exec(
+    #     select(MatchPerformance).where(MatchPerformance.match_date == db_match_performance.match_date)
+    # ).first()
     is_existing_cricketer = session.exec(
         select(Cricketer).where(Cricketer.id == db_match_performance.cricketer_id)
     ).first()
     if not is_existing_cricketer:
         raise HTTPException(status_code=404, detail="The cricketer does not exists")
-    if is_existing:
-        raise HTTPException(status_code=403, detail="Match performance already exists.")
+    # if is_existing:
+    #     raise HTTPException(status_code=403, detail="Match performance already exists.")
     session.add(db_match_performance)
     session.commit()
     session.refresh(db_match_performance)
