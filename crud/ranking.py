@@ -30,15 +30,12 @@ def create_ranking(session: Session):
         )
         rankings.append(rank)
 
-
     rankings.sort(key=lambda x: x.score, reverse=True)
     for pos, rank in enumerate(rankings, start=1):
         rank.rank_position = pos
 
         # Check if a ranking already exists for the cricketer
-        existing = session.exec(
-            select(Ranking).where(Ranking.cricketer_id == rank.cricketer_id)
-        ).first()
+        existing = session.exec(select(Ranking).where(Ranking.cricketer_id == rank.cricketer_id)).first()
 
         if existing:
             # Update existing
@@ -47,6 +44,7 @@ def create_ranking(session: Session):
             existing.total_wickets = rank.total_wickets
             existing.score = rank.score
             existing.rank_position = rank.rank_position
+            session.add(existing)
         else:
             # Add new
             session.add(rank)
@@ -74,8 +72,9 @@ def update_rankings(session: Session, new_match_performance: MatchPerformance):
             rank_position=None,
             cricketer_id=cricketer.id,
         )
-        session.add(ranking)
+    session.add(ranking)
     session.commit()
+    session.refresh(ranking)
 
     all_rankings = session.exec(select(Ranking)).all()
     all_rankings.sort(key=lambda x: x.score, reverse=True)
